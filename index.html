@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบบประเมินสุขภาพลำไส้</title>
+<style>
+  body { 
+    font-family: sans-serif; 
+    background: #f4fdf4; 
+    display: flex; 
+    justify-content: center; 
+    padding: 20px; 
+    margin: 0;
+  }
+  .container { 
+    background: white; 
+    padding: 30px; 
+    border-radius: 15px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+    max-width: 600px; 
+    width: 100%; 
+  }
+  h2 { 
+    color: #8cc63f; 
+    text-align: center; 
+    margin-bottom: 20px;
+  }
+  .question-block {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+  }
+  .question-block:last-of-type {
+    border-bottom: none;
+  }
+  .question { 
+    font-weight: bold; 
+    margin-bottom: 15px; 
+    color: #333;
+  }
+  .option { 
+    display: block; 
+    padding: 12px 15px; 
+    margin: 8px 0; 
+    border: 1px solid #e0e0e0; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: 0.2s; 
+    font-size: 14px;
+    color: #333;
+  }
+  .option:hover { 
+    border-color: #8cc63f; 
+  }
+  input[type="radio"] { 
+    display: none; 
+  }
+  input[type="radio"]:checked + .option { 
+    border-color: #8cc63f;
+    box-shadow: 0 0 0 1px #8cc63f;
+    background-color: #f4fdf4;
+  }
+  button { 
+    width: 100%; 
+    padding: 15px; 
+    background: #444; 
+    color: white; 
+    border: none; 
+    border-radius: 25px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    margin-top: 20px; 
+  }
+  button:hover {
+    background: #333;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>แบบประเมินสุขภาพลำไส้</h2>
+
+  <form action="https://docs.google.com/forms/d/e/1FAIpQLSc0mtdDP8Ozyg0_SC_7Mw-UmLgBLXupLqsJ6GFCdF1sPC6jag/formResponse" method="POST">
+
+    <!-- Question 1 -->
+    <div class="question-block">
+      <p class="question">1. โดยรวมคุณพึงพอใจกับสภาพผิวเพียงใด</p>
+      <label><input type="radio" name="entry.ID_1" value="ไม่พึงพอใจมาก" required><span class="option">ไม่พึงพอใจมาก</span></label>
+      <label><input type="radio" name="entry.ID_1" value="ไม่ค่อยพึงพอใจ"><span class="option">ไม่ค่อยพึงพอใจ</span></label>
+      <label><input type="radio" name="entry.ID_1" value="ปานกลาง"><span class="option">ปานกลาง</span></label>
+      <label><input type="radio" name="entry.ID_1" value="พึงพอใจ"><span class="option">พึงพอใจ</span></label>
+      <label><input type="radio" name="entry.ID_1" value="พึงพอใจมาก"><span class="option">พึงพอใจมาก</span></label>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question-block">
+      <p class="question">2. คุณมี สิว ผด ผื่น บ่อยเพียงใด</p>
+      <label><input type="radio" name="entry.ID_2" value="มีอาการทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">มีอาการทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_2" value="มีอาการบ่อย (4-5 วัน)"><span class="option">มีอาการบ่อย (4-5 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_2" value="มีอาการเป็นบางครั้ง (2-3 วัน)"><span class="option">มีอาการเป็นบางครั้ง (2-3 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_2" value="มีอาการนานๆ ครั้ง (1 วัน)"><span class="option">มีอาการนานๆ ครั้ง (1 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_2" value="ไม่มีอาการเลย"><span class="option">ไม่มีอาการเลย</span></label>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="question-block">
+      <p class="question">3. คุณมีอาการคันหรือระคายเคืองผิวหนังบ่อยเพียงใด</p>
+      <label><input type="radio" name="entry.ID_3" value="มีอาการทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">มีอาการทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_3" value="มีอาการบ่อย (4-5 วัน)"><span class="option">มีอาการบ่อย (4-5 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_3" value="มีอาการเป็นบางครั้ง (2-3 วัน)"><span class="option">มีอาการเป็นบางครั้ง (2-3 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_3" value="มีอาการนานๆ ครั้ง (1 วัน)"><span class="option">มีอาการนานๆ ครั้ง (1 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_3" value="ไม่มีอาการเลย"><span class="option">ไม่มีอาการเลย</span></label>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="question-block">
+      <p class="question">4. คุณมีอาการแน่นท้อง หรือท้องอืดบ่อยเพียงใด</p>
+      <label><input type="radio" name="entry.ID_4" value="ทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">ทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_4" value="บ่อย (4-5 วัน)"><span class="option">บ่อย (4-5 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_4" value="บางครั้ง (2-3 วัน)"><span class="option">บางครั้ง (2-3 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_4" value="นานๆ ครั้ง (1 วัน)"><span class="option">นานๆ ครั้ง (1 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_4" value="ไม่มีอาการเลย"><span class="option">ไม่มีอาการเลย</span></label>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="question-block">
+      <p class="question">5. คุณมีอาการกรดไหลย้อนหรือแสบร้อนกลางอกบ่อยเพียงใด</p>
+      <label><input type="radio" name="entry.ID_5" value="ทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">ทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_5" value="บ่อย (4-5 วัน)"><span class="option">บ่อย (4-5 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_5" value="เป็นบางครั้ง (2-3 วัน)"><span class="option">เป็นบางครั้ง (2-3 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_5" value="นานๆ ครั้ง (1 วัน)"><span class="option">นานๆ ครั้ง (1 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_5" value="ไม่มีอาการเลย"><span class="option">ไม่มีอาการเลย</span></label>
+    </div>
+
+    <!-- Question 6 -->
+    <div class="question-block">
+      <p class="question">6. คุณรู้สึกสดชื่นหลังตื่นนอนบ่อยเพียงใด</p>
+      <label><input type="radio" name="entry.ID_6" value="ไม่เคยเลย" required><span class="option">ไม่เคยเลย</span></label>
+      <label><input type="radio" name="entry.ID_6" value="น้อยมาก (1 วัน)"><span class="option">น้อยมาก (1 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_6" value="เป็นบางครั้ง (2-3 วัน)"><span class="option">เป็นบางครั้ง (2-3 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_6" value="บ่อย (4-5 วัน)"><span class="option">บ่อย (4-5 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_6" value="เกือบทุกวันหรือทุกวัน (6-7 วัน)"><span class="option">เกือบทุกวันหรือทุกวัน (6-7 วัน)</span></label>
+    </div>
+
+    <!-- Question 7 -->
+    <div class="question-block">
+      <p class="question">7. คุณรู้สึกเครียด วิตกกังวล หรือหงุดหงิดบ่อยเพียงใด</p>
+      <label><input type="radio" name="entry.ID_7" value="ทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">ทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_7" value="บ่อย (4-5 วัน)"><span class="option">บ่อย (4-5 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_7" value="เป็นบางครั้ง (2-3 วัน)"><span class="option">เป็นบางครั้ง (2-3 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_7" value="นานๆ ครั้ง (1 วัน)"><span class="option">นานๆ ครั้ง (1 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_7" value="ไม่เคยเลย"><span class="option">ไม่เคยเลย</span></label>
+    </div>
+
+    <!-- Question 8 -->
+    <div class="question-block">
+      <p class="question">8. คุณนอนหลับอย่างมีคุณภาพบ่อยเพียงใด</p>
+      <label><input type="radio" name="entry.ID_8" value="ไม่เคยเลย" required><span class="option">ไม่เคยเลย</span></label>
+      <label><input type="radio" name="entry.ID_8" value="น้อยมาก (1 วัน)"><span class="option">น้อยมาก (1 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_8" value="เป็นบางครั้ง (2-3 วัน)"><span class="option">เป็นบางครั้ง (2-3 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_8" value="บ่อย (4-5 วัน)"><span class="option">บ่อย (4-5 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_8" value="เกือบทุกวันหรือทุกวัน (6-7 วัน)"><span class="option">เกือบทุกวันหรือทุกวัน (6-7 วัน)</span></label>
+    </div>
+
+    <!-- Question 9 -->
+    <div class="question-block">
+      <p class="question">9. คุณสามารถควบคุมความหิว ระหว่างวันได้ดีเพียงใด</p>
+      <label><input type="radio" name="entry.ID_9" value="ไม่ได้เลย" required><span class="option">ไม่ได้เลย</span></label>
+      <label><input type="radio" name="entry.ID_9" value="ได้น้อย (1 วัน)"><span class="option">ได้น้อย (1 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_9" value="ได้เป็นบางครั้ง (2-3 วัน)"><span class="option">ได้เป็นบางครั้ง (2-3 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_9" value="ได้บ่อย (4-5 วัน)"><span class="option">ได้บ่อย (4-5 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_9" value="ได้เกือบทุกวันหรือทุกวัน (6-7 วัน)"><span class="option">ได้เกือบทุกวันหรือทุกวัน (6-7 วัน)</span></label>
+    </div>
+
+    <!-- Question 10 -->
+    <div class="question-block">
+      <p class="question">10. คุณรับประทานอาหารจุบจิบ ระหว่างมื้อบ่อยเพียงใด</p>
+      <label><input type="radio" name="entry.ID_10" value="ทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">ทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_10" value="บ่อย (4-5 วัน)"><span class="option">บ่อย (4-5 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_10" value="เป็นบางครั้ง (2-3 วัน)"><span class="option">เป็นบางครั้ง (2-3 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_10" value="นานๆ ครั้ง (1 วัน)"><span class="option">นานๆ ครั้ง (1 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_10" value="ไม่เคยเลย"><span class="option">ไม่เคยเลย</span></label>
+    </div>
+
+    <!-- Question 11 -->
+    <div class="question-block">
+      <p class="question">11. คุณรู้สึกว่าร่างกายคล่องตัว และไม่อึดอัดเพียงใด</p>
+      <label><input type="radio" name="entry.ID_11" value="ไม่เคยเลย" required><span class="option">ไม่เคยเลย</span></label>
+      <label><input type="radio" name="entry.ID_11" value="น้อยมาก (1 วัน)"><span class="option">น้อยมาก (1 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_11" value="เป็นบางครั้ง (2-3 วัน)"><span class="option">เป็นบางครั้ง (2-3 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_11" value="บ่อย (4-5 วัน)"><span class="option">บ่อย (4-5 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_11" value="เกือบทุกวันหรือทุกวัน (6-7 วัน)"><span class="option">เกือบทุกวันหรือทุกวัน (6-7 วัน)</span></label>
+    </div>
+
+    <!-- Question 12 -->
+    <div class="question-block">
+      <p class="question">12. คุณเข้าห้องน้ำเพื่อขับถ่ายบ่อยเพียงใด</p>
+      <label><input type="radio" name="entry.ID_12" value="น้อยกว่า 3 ครั้งต่อสัปดาห์" required><span class="option">น้อยกว่า 3 ครั้งต่อสัปดาห์</span></label>
+      <label><input type="radio" name="entry.ID_12" value="3-4 ครั้งต่อสัปดาห์"><span class="option">3-4 ครั้งต่อสัปดาห์</span></label>
+      <label><input type="radio" name="entry.ID_12" value="5-6 ครั้งต่อสัปดาห์"><span class="option">5-6 ครั้งต่อสัปดาห์</span></label>
+      <label><input type="radio" name="entry.ID_12" value="วันละประมาณ 1 ครั้ง (5-7 วันต่อสัปดาห์)"><span class="option">วันละประมาณ 1 ครั้ง (5-7 วันต่อสัปดาห์)</span></label>
+      <label><input type="radio" name="entry.ID_12" value="วันละ 1-2 ครั้งอย่างสม่ำเสมอ"><span class="option">วันละ 1-2 ครั้งอย่างสม่ำเสมอ</span></label>
+    </div>
+
+    <!-- Question 13 -->
+    <div class="question-block">
+      <p class="question">13. คุณมีอาการท้องผูกบ่อยเพียงใด</p>
+      <label><input type="radio" name="entry.ID_13" value="มีอาการทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">มีอาการทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_13" value="มีอาการบ่อย (4-5 วัน)"><span class="option">มีอาการบ่อย (4-5 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_13" value="มีอาการเป็นบางครั้ง (2-3 วัน)"><span class="option">มีอาการเป็นบางครั้ง (2-3 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_13" value="มีอาการนานๆ ครั้ง (1 วัน)"><span class="option">มีอาการนานๆ ครั้ง (1 วัน)</span></label>
+      <label><input type="radio" name="entry.ID_13" value="ไม่มีอาการเลย"><span class="option">ไม่มีอาการเลย</span></label>
+    </div>
+
+    <button type="submit">ส่งแบบประเมิน</button>
+  </form>
+</div>
+
+</body>
+</html>
