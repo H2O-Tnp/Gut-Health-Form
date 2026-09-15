@@ -217,6 +217,32 @@
     <button type="submit">ส่งแบบประเมิน</button>
   </form>
 </div>
+    <script>
+        const form = document.querySelector('form');
 
+        form.addEventListener('submit', function(e) {
+            // 1. Prevent the default browser redirect
+            e.preventDefault(); 
+
+            // 2. Gather the form data
+            const formData = new FormData(form);
+
+            // 3. Send the data asynchronously
+            fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors' // Required to bypass CORS restrictions on Google Forms
+            })
+            .then(() => {
+            // 4. Execute success actions
+            alert('ส่งแบบประเมินเรียบร้อยแล้ว'); // Show success message
+            form.reset(); // Clear the form fields
+            })
+            .catch(error => {
+            console.error('Error:', error);
+            alert('เกิดข้อผิดพลาดในการส่งข้อมูล');
+            });
+        });
+    </script>
 </body>
 </html>
