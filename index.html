@@ -315,6 +315,43 @@
     display: block;
     animation: slideIn 0.3s;
   }
+  .score-result {
+    display: none;
+    width: 100%;
+    max-width: 575px;
+    padding: 28px 24px;
+    margin: 0 0 24px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.055);
+    text-align: center;
+  }
+  .score-result.active { display: block; }
+  body.result-mode {
+    justify-content: center;
+    padding-bottom: 25px;
+  }
+  body.result-mode .header,
+  body.result-mode .category-nav,
+  body.result-mode .container,
+  body.result-mode .bottom-nav {
+    display: none;
+  }
+  body.result-mode .score-result {
+    display: block;
+    animation: slideIn 0.3s ease-out;
+  }
+  .score-result h2 {
+    margin: 0 0 8px;
+    color: var(--primary);
+    font-size: 26px;
+  }
+  .score-result p {
+    margin: 0;
+    color: var(--text-main);
+    font-size: 22px;
+    font-weight: 500;
+  }
 
   @media (max-width: 520px) {
     body { padding: 16px 12px 116px; }
@@ -334,6 +371,7 @@
     .back-btn { width: 62px; height: 62px; font-size: 34px; flex: 0 0 62px; }
     .progress-bar-container { height: 14px; margin: 0 10px; }
     .progress-text { font-size: 19px; min-width: 36px; }
+    body.result-mode { padding: 16px 12px 25px; }
   }
 </style>
 </head>
@@ -517,6 +555,11 @@
   </form>
 </div>
 
+<div class="score-result" id="scoreResult" role="status" aria-live="polite">
+  <h2>ส่งแบบประเมินเรียบร้อยแล้ว</h2>
+  <p>คะแนนรวมของคุณ: <strong id="scoreValue"></strong> / 65 คะแนน</p>
+</div>
+
 <!-- Bottom Navigation -->
 <div class="bottom-nav">
   <button class="back-btn" id="backBtn" disabled><span>&#8592;</span></button>
@@ -538,9 +581,19 @@
   const catSteps = document.querySelectorAll('.cat-step');
   const form = document.getElementById('assessmentForm');
   const profileNext = document.getElementById('profileNext');
+  const scoreResult = document.getElementById('scoreResult');
+  const scoreValue = document.getElementById('scoreValue');
   
   let currentStep = 0;
   const totalSteps = screens.length;
+
+  function calculateScore() {
+    return Array.from(questions).reduce((total, question) => {
+      const options = Array.from(question.querySelectorAll('input[type="radio"]'));
+      const selectedOption = options.find(option => option.checked);
+      return total + (selectedOption ? options.indexOf(selectedOption) + 1 : 0);
+    }, 0);
+  }
 
   function updateUI() {
     // Update Question Visibility
@@ -610,6 +663,7 @@
   // Handle Form Submission[cite: 1]
   form.addEventListener('submit', function(e) {
     e.preventDefault(); 
+    const totalScore = calculateScore();
     const formData = new FormData(form);
 
     fetch(form.action, {
@@ -618,7 +672,9 @@
       mode: 'no-cors' 
     })
     .then(() => {
-      alert('ส่งแบบประเมินเรียบร้อยแล้ว'); 
+      scoreValue.innerText = totalScore;
+      document.body.classList.add('result-mode');
+      scoreResult.classList.add('active');
       form.reset(); 
       currentStep = 0;
       updateUI();
