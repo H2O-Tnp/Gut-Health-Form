@@ -136,6 +136,57 @@
   .question-block.active {
     display: block;
   }
+  .profile-block {
+    display: none;
+    background: white;
+    padding: 29px 25px 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.055);
+    margin-bottom: 24px;
+    animation: slideIn 0.3s ease-out;
+  }
+  .profile-block.active { display: block; }
+  .profile-title {
+    color: var(--primary);
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 24px;
+  }
+  .profile-field {
+    display: block;
+    margin: 18px 0;
+    color: var(--text-main);
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .profile-field input {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding: 14px 16px;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    font: inherit;
+    outline: none;
+  }
+  .profile-field input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+  }
+  .profile-next {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0 10px;
+    border: none;
+    border-radius: 25px;
+    background: var(--primary);
+    color: white;
+    font: inherit;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+  }
   @keyframes slideIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -203,17 +254,21 @@
     min-height: 143px;
   }
   .back-btn {
-    width: 78px;
-    height: 78px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     background: #3c3c3c;
     color: white;
     border: none;
-    font-size: 43px;
+    font-size: 42px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .back-btn span {
+    display: block;
+    transform: translateY(-2px);
   }
   .back-btn:disabled {
     background: #ccc;
@@ -244,7 +299,7 @@
 
   .submit-btn { 
     display: none;
-    width: 100%; 
+    flex-grow: 1;
     padding: 15px; 
     background: var(--primary); 
     color: white; 
@@ -253,7 +308,7 @@
     font-size: 18px; 
     font-weight: 500;
     cursor: pointer; 
-    margin-top: 20px; 
+    margin: 0 0 0 18px; 
     font-family: inherit;
   }
   .submit-btn.active {
@@ -263,15 +318,15 @@
 
   @media (max-width: 520px) {
     body { padding: 16px 12px 116px; }
-    .header { min-height: 104px; margin-bottom: 27px; padding: 14px 18px; border-radius: 54px; }
-    .header::before { flex: 0 0 66px; width: 66px; height: 66px; margin-right: 11px; font-size: 31px; }
-    .header h2 { font-size: 23px; line-height: 1.25; }
+    .header { min-height: 84px; margin-bottom: 15px; padding: 14px 18px; border-radius: 54px; }
+    .header::before { flex: 0 0 66px; width: 66px; height: 45px; margin-right: 11px; font-size: 31px; }
+    .header h2 { font-size: 23px; line-height: 1.00; }
     .category-nav { margin-bottom: 22px; padding: 0 1px; }
     .category-nav::before { top: 29px; left: 8%; right: 8%; height: 3px; }
-    .cat-step { font-size: 10px; line-height: 1.25; }
+    .cat-step { font-size: 15px; line-height: 1.25; }
     .cat-step .icon-circle { width: 58px; height: 58px; border-width: 4px; margin-bottom: 7px; font-size: 21px; }
     .cat-step.active .icon-circle { box-shadow: 0 0 0 3px #e7f7d4; }
-    .question-block { padding: 23px 14px 15px; border-radius: 17px; margin-bottom: 16px; }
+    .question-block, .profile-block { padding: 23px 14px 15px; border-radius: 17px; margin-bottom: 16px; }
     .q-number { font-size: 26px; margin-bottom: 9px; }
     .question { font-size: 22px; line-height: 1.4; margin-bottom: 19px; }
     .option { padding: 15px 22px; margin: 12px 0; border-radius: 15px; font-size: 17px; line-height: 1.35; }
@@ -314,8 +369,22 @@
 <div class="container">
   <form id="assessmentForm" action="https://docs.google.com/forms/d/e/1FAIpQLSc0mtdDP8Ozyg0_SC_7Mw-UmLgBLXupLqsJ6GFCdF1sPC6jag/formResponse" method="POST">
 
+    <div class="profile-block active" id="profileBlock">
+      <h1 class="profile-title">ข้อมูลผู้ตอบแบบประเมิน</h1>
+      <label class="profile-field">ชื่อเล่น
+        <input type="text" name="entry.371908533" required autocomplete="nickname">
+      </label>
+      <label class="profile-field">อายุ
+        <input type="number" name="entry.2127934664" required min="1" max="120" inputmode="numeric">
+      </label>
+      <label class="profile-field">เบอร์โทร
+        <input type="tel" name="entry.588420905" required autocomplete="tel" inputmode="tel">
+      </label>
+      <button type="button" class="profile-next" id="profileNext">เริ่มทำแบบประเมิน</button>
+    </div>
+
     <!-- Questions 1 to 13[cite: 1] -->
-    <div class="question-block active">
+    <div class="question-block">
       <div class="q-number">คำถามที่ 1</div>
       <p class="question">โดยรวมคุณพึงพอใจกับสภาพผิวเพียงใด</p>
       <label><input type="radio" name="entry.282468567" value="ไม่พึงพอใจมาก" required><span class="option">ไม่พึงพอใจมาก</span></label>
@@ -445,21 +514,22 @@
       <label><input type="radio" name="entry.1277553664" value="ไม่มีอาการเลย"><span class="option">ไม่มีอาการเลย</span></label>
     </div>
 
-    <button type="submit" class="submit-btn" id="submitBtn">ส่งแบบประเมิน</button>
   </form>
 </div>
 
 <!-- Bottom Navigation -->
 <div class="bottom-nav">
-  <button class="back-btn" id="backBtn" disabled>&#8592;</button>
+  <button class="back-btn" id="backBtn" disabled><span>&#8592;</span></button>
   <div class="progress-bar-container">
     <div class="progress-fill" id="progressFill"></div>
   </div>
   <div class="progress-text" id="progressText">1/13</div>
+  <button type="submit" form="assessmentForm" class="submit-btn" id="submitBtn">ส่งแบบประเมิน</button>
 </div>
 
 <script>
   const questions = document.querySelectorAll('.question-block');
+  const screens = document.querySelectorAll('.profile-block, .question-block');
   const radios = document.querySelectorAll('input[type="radio"]');
   const backBtn = document.getElementById('backBtn');
   const submitBtn = document.getElementById('submitBtn');
@@ -467,33 +537,38 @@
   const progressText = document.getElementById('progressText');
   const catSteps = document.querySelectorAll('.cat-step');
   const form = document.getElementById('assessmentForm');
+  const profileNext = document.getElementById('profileNext');
   
   let currentStep = 0;
-  const totalSteps = questions.length;
+  const totalSteps = screens.length;
 
   function updateUI() {
     // Update Question Visibility
-    questions.forEach((q, index) => {
-      q.classList.toggle('active', index === currentStep);
+    screens.forEach((screen, index) => {
+      screen.classList.toggle('active', index === currentStep);
     });
 
     // Update Bottom Progress
-    const progressPercent = ((currentStep + 1) / totalSteps) * 100;
+    const questionStep = Math.max(currentStep, 1);
+    const progressPercent = ((questionStep) / questions.length) * 100;
     progressFill.style.width = `${progressPercent}%`;
-    progressText.innerText = `${currentStep + 1}/${totalSteps}`;
+    progressText.innerText = currentStep === 0 ? 'เริ่มต้น' : `${currentStep}/${questions.length}`;
     
     // Toggle Back Button State
     backBtn.disabled = currentStep === 0;
 
     // Toggle Submit Button on Last Step
-    if (currentStep === totalSteps - 1) {
+    const isLastStep = currentStep === totalSteps - 1;
+    progressFill.parentElement.hidden = isLastStep;
+    progressText.hidden = isLastStep;
+    if (isLastStep) {
       submitBtn.classList.add('active');
     } else {
       submitBtn.classList.remove('active');
     }
 
     // Update Top Category Progress (Logic assumes roughly 2-3 questions per category)
-    const categoryIndex = Math.floor(currentStep / 2.6); // Spreads 13 questions across 5 categories
+    const categoryIndex = currentStep === 0 ? -1 : Math.floor((currentStep - 1) / 2.6);
     catSteps.forEach((cat, index) => {
       if (index <= categoryIndex) {
         cat.classList.add('active');
@@ -513,6 +588,15 @@
         }
       }, 300); // 300ms delay for smooth transition
     });
+  });
+
+  profileNext.addEventListener('click', () => {
+    if (form.querySelector('.profile-block').querySelector('input:invalid')) {
+      form.querySelector('.profile-block').querySelector('input:invalid').reportValidity();
+      return;
+    }
+    currentStep = 1;
+    updateUI();
   });
 
   // Handle Back Button
