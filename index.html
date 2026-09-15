@@ -4,89 +4,282 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>แบบประเมินสุขภาพลำไส้</title>
+<!-- Import Thai Font (Prompt) -->
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --primary: #8cc63f;
+    --primary-light: #f4fdf4;
+    --text-main: #333;
+    --text-muted: #888;
+    --border-color: #eee;
+  }
+
   body { 
-    font-family: sans-serif; 
-    background: #f4fdf4; 
+    font-family: 'Prompt', sans-serif; 
+    background: linear-gradient(180deg, #eef9ee 0%, #f4fdf4 100%);
     display: flex; 
-    justify-content: center; 
-    padding: 20px; 
+    flex-direction: column;
+    align-items: center; 
+    padding: 20px 15px; 
     margin: 0;
+    min-height: 100vh;
   }
-  .container { 
-    background: white; 
-    padding: 30px; 
-    border-radius: 15px; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-    max-width: 600px; 
-    width: 100%; 
+
+  /* Header & Title */
+  .header {
+    text-align: center;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    padding: 10px 25px;
+    border-radius: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
   }
-  h2 { 
-    color: #8cc63f; 
-    text-align: center; 
-    margin-bottom: 20px;
+  .header img {
+    width: 40px;
   }
-  .question-block {
+  .header h2 { 
+    color: var(--text-main); 
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  /* Top Category Progress */
+  .category-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
     margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
   }
-  .question-block:last-of-type {
-    border-bottom: none;
+  .category-nav::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 10%;
+    right: 10%;
+    height: 3px;
+    background: var(--border-color);
+    z-index: 0;
+  }
+  .cat-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    width: 20%;
+    color: #ccc;
+    font-size: 11px;
+    transition: 0.3s;
+  }
+  .cat-step .icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    font-size: 20px;
+    transition: 0.3s;
+  }
+  .cat-step.active {
+    color: var(--primary);
+  }
+  .cat-step.active .icon-circle {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-light);
+  }
+
+  /* Form Container */
+  .container { 
+    max-width: 500px; 
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  /* Question Cards */
+  .question-block {
+    display: none;
+    background: white; 
+    padding: 25px; 
+    border-radius: 15px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
+    margin-bottom: 20px;
+    animation: slideIn 0.3s ease-out;
+  }
+  .question-block.active {
+    display: block;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .q-number {
+    color: var(--primary);
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 10px;
   }
   .question { 
-    font-weight: bold; 
-    margin-bottom: 15px; 
-    color: #333;
+    font-size: 16px;
+    font-weight: 500; 
+    text-align: center;
+    margin-bottom: 20px; 
+    color: var(--text-main);
   }
+
+  /* Options */
   .option { 
     display: block; 
-    padding: 12px 15px; 
-    margin: 8px 0; 
-    border: 1px solid #e0e0e0; 
-    border-radius: 8px; 
+    padding: 15px 20px; 
+    margin: 12px 0; 
+    background: white;
+    border: 1px solid var(--border-color); 
+    border-radius: 12px; 
     cursor: pointer; 
-    transition: 0.2s; 
-    font-size: 14px;
-    color: #333;
+    transition: all 0.2s; 
+    font-size: 15px;
+    color: var(--text-main);
+    text-align: center;
+    font-weight: 400;
   }
   .option:hover { 
-    border-color: #8cc63f; 
+    border-color: var(--primary); 
+    background-color: var(--primary-light);
   }
   input[type="radio"] { 
     display: none; 
   }
   input[type="radio"]:checked + .option { 
-    border-color: #8cc63f;
-    box-shadow: 0 0 0 1px #8cc63f;
-    background-color: #f4fdf4;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+    background-color: var(--primary-light);
+    font-weight: 500;
   }
-  button { 
+
+  /* Bottom Progress Bar */
+  .bottom-nav {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 15px 25px;
+    border-radius: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    position: sticky;
+    bottom: 20px;
+    width: 100%;
+    max-width: 450px;
+    margin: auto auto 0 auto;
+    box-sizing: border-box;
+  }
+  .back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #3c3c3c;
+    color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .back-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  .progress-bar-container {
+    flex-grow: 1;
+    height: 8px;
+    background: #eef0ea;
+    border-radius: 4px;
+    margin: 0 15px;
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  .progress-text {
+    font-weight: 600;
+    color: #1a4f36;
+    font-size: 14px;
+    min-width: 35px;
+  }
+
+  .submit-btn { 
+    display: none;
     width: 100%; 
     padding: 15px; 
-    background: #444; 
+    background: var(--primary); 
     color: white; 
     border: none; 
     border-radius: 25px; 
-    font-size: 16px; 
+    font-size: 18px; 
+    font-weight: 500;
     cursor: pointer; 
     margin-top: 20px; 
+    font-family: inherit;
   }
-  button:hover {
-    background: #333;
+  .submit-btn.active {
+    display: block;
+    animation: slideIn 0.3s;
   }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="header">
   <h2>แบบประเมินสุขภาพลำไส้</h2>
+</div>
 
-  <form action="https://docs.google.com/forms/d/e/1FAIpQLSc0mtdDP8Ozyg0_SC_7Mw-UmLgBLXupLqsJ6GFCdF1sPC6jag/formResponse" method="POST">
+<div class="category-nav" id="categoryNav">
+  <div class="cat-step active" data-cat="0">
+    <div class="icon-circle">💩</div>
+    <span>การขับถ่าย</span>
+  </div>
+  <div class="cat-step" data-cat="1">
+    <div class="icon-circle">🍲</div>
+    <span>การย่อยอาหาร</span>
+  </div>
+  <div class="cat-step" data-cat="2">
+    <div class="icon-circle">🛡️</div>
+    <span>ผิวและภูมิคุ้มกัน</span>
+  </div>
+  <div class="cat-step" data-cat="3">
+    <div class="icon-circle">😊</div>
+    <span>จิตใจและอารมณ์</span>
+  </div>
+  <div class="cat-step" data-cat="4">
+    <div class="icon-circle">⚖️</div>
+    <span>การควบคุมน้ำหนัก</span>
+  </div>
+</div>
 
-    <!-- Question 1 -->
-    <div class="question-block">
-      <p class="question">1. โดยรวมคุณพึงพอใจกับสภาพผิวเพียงใด</p>
+<div class="container">
+  <form id="assessmentForm" action="https://docs.google.com/forms/d/e/1FAIpQLSc0mtdDP8Ozyg0_SC_7Mw-UmLgBLXupLqsJ6GFCdF1sPC6jag/formResponse" method="POST">
+
+    <!-- Questions 1 to 13[cite: 1] -->
+    <div class="question-block active">
+      <div class="q-number">คำถามที่ 1</div>
+      <p class="question">โดยรวมคุณพึงพอใจกับสภาพผิวเพียงใด</p>
       <label><input type="radio" name="entry.282468567" value="ไม่พึงพอใจมาก" required><span class="option">ไม่พึงพอใจมาก</span></label>
       <label><input type="radio" name="entry.282468567" value="ไม่ค่อยพึงพอใจ"><span class="option">ไม่ค่อยพึงพอใจ</span></label>
       <label><input type="radio" name="entry.282468567" value="ปานกลาง"><span class="option">ปานกลาง</span></label>
@@ -94,9 +287,9 @@
       <label><input type="radio" name="entry.282468567" value="พึงพอใจมาก"><span class="option">พึงพอใจมาก</span></label>
     </div>
 
-    <!-- Question 2 -->
     <div class="question-block">
-      <p class="question">2. คุณมี สิว ผด ผื่น บ่อยเพียงใด</p>
+      <div class="q-number">คำถามที่ 2</div>
+      <p class="question">คุณมี สิว ผด ผื่น บ่อยเพียงใด</p>
       <label><input type="radio" name="entry.1653654164" value="มีอาการทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">มีอาการทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
       <label><input type="radio" name="entry.1653654164" value="มีอาการบ่อย (4-5 วัน)"><span class="option">มีอาการบ่อย (4-5 วัน)</span></label>
       <label><input type="radio" name="entry.1653654164" value="มีอาการเป็นบางครั้ง (2-3 วัน)"><span class="option">มีอาการเป็นบางครั้ง (2-3 วัน)</span></label>
@@ -104,9 +297,9 @@
       <label><input type="radio" name="entry.1653654164" value="ไม่มีอาการเลย"><span class="option">ไม่มีอาการเลย</span></label>
     </div>
 
-    <!-- Question 3 -->
     <div class="question-block">
-      <p class="question">3. คุณมีอาการคันหรือระคายเคืองผิวหนังบ่อยเพียงใด</p>
+      <div class="q-number">คำถามที่ 3</div>
+      <p class="question">คุณมีอาการคันหรือระคายเคืองผิวหนังบ่อยเพียงใด</p>
       <label><input type="radio" name="entry.184015602" value="มีอาการทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">มีอาการทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
       <label><input type="radio" name="entry.184015602" value="มีอาการบ่อย (4-5 วัน)"><span class="option">มีอาการบ่อย (4-5 วัน)</span></label>
       <label><input type="radio" name="entry.184015602" value="มีอาการเป็นบางครั้ง (2-3 วัน)"><span class="option">มีอาการเป็นบางครั้ง (2-3 วัน)</span></label>
@@ -114,9 +307,9 @@
       <label><input type="radio" name="entry.184015602" value="ไม่มีอาการเลย"><span class="option">ไม่มีอาการเลย</span></label>
     </div>
 
-    <!-- Question 4 -->
     <div class="question-block">
-      <p class="question">4. คุณมีอาการแน่นท้อง หรือท้องอืดบ่อยเพียงใด</p>
+      <div class="q-number">คำถามที่ 4</div>
+      <p class="question">คุณมีอาการแน่นท้อง หรือท้องอืดบ่อยเพียงใด</p>
       <label><input type="radio" name="entry.10854573" value="ทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">ทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
       <label><input type="radio" name="entry.10854573" value="บ่อย (4-5 วัน)"><span class="option">บ่อย (4-5 วัน)</span></label>
       <label><input type="radio" name="entry.10854573" value="บางครั้ง (2-3 วัน)"><span class="option">บางครั้ง (2-3 วัน)</span></label>
@@ -124,9 +317,9 @@
       <label><input type="radio" name="entry.10854573" value="ไม่มีอาการเลย"><span class="option">ไม่มีอาการเลย</span></label>
     </div>
 
-    <!-- Question 5 -->
     <div class="question-block">
-      <p class="question">5. คุณมีอาการกรดไหลย้อนหรือแสบร้อนกลางอกบ่อยเพียงใด</p>
+      <div class="q-number">คำถามที่ 5</div>
+      <p class="question">คุณมีอาการกรดไหลย้อนหรือแสบร้อนกลางอกบ่อยเพียงใด</p>
       <label><input type="radio" name="entry.1404427199" value="ทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">ทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
       <label><input type="radio" name="entry.1404427199" value="บ่อย (4-5 วัน)"><span class="option">บ่อย (4-5 วัน)</span></label>
       <label><input type="radio" name="entry.1404427199" value="เป็นบางครั้ง (2-3 วัน)"><span class="option">เป็นบางครั้ง (2-3 วัน)</span></label>
@@ -134,9 +327,9 @@
       <label><input type="radio" name="entry.1404427199" value="ไม่มีอาการเลย"><span class="option">ไม่มีอาการเลย</span></label>
     </div>
 
-    <!-- Question 6 -->
     <div class="question-block">
-      <p class="question">6. คุณรู้สึกสดชื่นหลังตื่นนอนบ่อยเพียงใด</p>
+      <div class="q-number">คำถามที่ 6</div>
+      <p class="question">คุณรู้สึกสดชื่นหลังตื่นนอนบ่อยเพียงใด</p>
       <label><input type="radio" name="entry.751307973" value="ไม่เคยเลย" required><span class="option">ไม่เคยเลย</span></label>
       <label><input type="radio" name="entry.751307973" value="น้อยมาก (1 วัน)"><span class="option">น้อยมาก (1 วัน)</span></label>
       <label><input type="radio" name="entry.751307973" value="เป็นบางครั้ง (2-3 วัน)"><span class="option">เป็นบางครั้ง (2-3 วัน)</span></label>
@@ -144,9 +337,9 @@
       <label><input type="radio" name="entry.751307973" value="เกือบทุกวันหรือทุกวัน (6-7 วัน)"><span class="option">เกือบทุกวันหรือทุกวัน (6-7 วัน)</span></label>
     </div>
 
-    <!-- Question 7 -->
     <div class="question-block">
-      <p class="question">7. คุณรู้สึกเครียด วิตกกังวล หรือหงุดหงิดบ่อยเพียงใด</p>
+      <div class="q-number">คำถามที่ 7</div>
+      <p class="question">คุณรู้สึกเครียด วิตกกังวล หรือหงุดหงิดบ่อยเพียงใด</p>
       <label><input type="radio" name="entry.86564152" value="ทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">ทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
       <label><input type="radio" name="entry.86564152" value="บ่อย (4-5 วัน)"><span class="option">บ่อย (4-5 วัน)</span></label>
       <label><input type="radio" name="entry.86564152" value="เป็นบางครั้ง (2-3 วัน)"><span class="option">เป็นบางครั้ง (2-3 วัน)</span></label>
@@ -154,9 +347,9 @@
       <label><input type="radio" name="entry.86564152" value="ไม่เคยเลย"><span class="option">ไม่เคยเลย</span></label>
     </div>
 
-    <!-- Question 8 -->
     <div class="question-block">
-      <p class="question">8. คุณนอนหลับอย่างมีคุณภาพบ่อยเพียงใด</p>
+      <div class="q-number">คำถามที่ 8</div>
+      <p class="question">คุณนอนหลับอย่างมีคุณภาพบ่อยเพียงใด</p>
       <label><input type="radio" name="entry.1043283516" value="ไม่เคยเลย" required><span class="option">ไม่เคยเลย</span></label>
       <label><input type="radio" name="entry.1043283516" value="น้อยมาก (1 วัน)"><span class="option">น้อยมาก (1 วัน)</span></label>
       <label><input type="radio" name="entry.1043283516" value="เป็นบางครั้ง (2-3 วัน)"><span class="option">เป็นบางครั้ง (2-3 วัน)</span></label>
@@ -164,9 +357,9 @@
       <label><input type="radio" name="entry.1043283516" value="เกือบทุกวันหรือทุกวัน (6-7 วัน)"><span class="option">เกือบทุกวันหรือทุกวัน (6-7 วัน)</span></label>
     </div>
 
-    <!-- Question 9 -->
     <div class="question-block">
-      <p class="question">9. คุณสามารถควบคุมความหิว ระหว่างวันได้ดีเพียงใด</p>
+      <div class="q-number">คำถามที่ 9</div>
+      <p class="question">คุณสามารถควบคุมความหิว ระหว่างวันได้ดีเพียงใด</p>
       <label><input type="radio" name="entry.574995038" value="ไม่ได้เลย" required><span class="option">ไม่ได้เลย</span></label>
       <label><input type="radio" name="entry.574995038" value="ได้น้อย (1 วัน)"><span class="option">ได้น้อย (1 วัน)</span></label>
       <label><input type="radio" name="entry.574995038" value="ได้เป็นบางครั้ง (2-3 วัน)"><span class="option">ได้เป็นบางครั้ง (2-3 วัน)</span></label>
@@ -174,9 +367,9 @@
       <label><input type="radio" name="entry.574995038" value="ได้เกือบทุกวันหรือทุกวัน (6-7 วัน)"><span class="option">ได้เกือบทุกวันหรือทุกวัน (6-7 วัน)</span></label>
     </div>
 
-    <!-- Question 10 -->
     <div class="question-block">
-      <p class="question">10. คุณรับประทานอาหารจุบจิบ ระหว่างมื้อบ่อยเพียงใด</p>
+      <div class="q-number">คำถามที่ 10</div>
+      <p class="question">คุณรับประทานอาหารจุบจิบ ระหว่างมื้อบ่อยเพียงใด</p>
       <label><input type="radio" name="entry.1000176515" value="ทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">ทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
       <label><input type="radio" name="entry.1000176515" value="บ่อย (4-5 วัน)"><span class="option">บ่อย (4-5 วัน)</span></label>
       <label><input type="radio" name="entry.1000176515" value="เป็นบางครั้ง (2-3 วัน)"><span class="option">เป็นบางครั้ง (2-3 วัน)</span></label>
@@ -184,9 +377,9 @@
       <label><input type="radio" name="entry.1000176515" value="ไม่เคยเลย"><span class="option">ไม่เคยเลย</span></label>
     </div>
 
-    <!-- Question 11 -->
     <div class="question-block">
-      <p class="question">11. คุณรู้สึกว่าร่างกายคล่องตัว และไม่อึดอัดเพียงใด</p>
+      <div class="q-number">คำถามที่ 11</div>
+      <p class="question">คุณรู้สึกว่าร่างกายคล่องตัว และไม่อึดอัดเพียงใด</p>
       <label><input type="radio" name="entry.644892240" value="ไม่เคยเลย" required><span class="option">ไม่เคยเลย</span></label>
       <label><input type="radio" name="entry.644892240" value="น้อยมาก (1 วัน)"><span class="option">น้อยมาก (1 วัน)</span></label>
       <label><input type="radio" name="entry.644892240" value="เป็นบางครั้ง (2-3 วัน)"><span class="option">เป็นบางครั้ง (2-3 วัน)</span></label>
@@ -194,9 +387,9 @@
       <label><input type="radio" name="entry.644892240" value="เกือบทุกวันหรือทุกวัน (6-7 วัน)"><span class="option">เกือบทุกวันหรือทุกวัน (6-7 วัน)</span></label>
     </div>
 
-    <!-- Question 12 -->
     <div class="question-block">
-      <p class="question">12. คุณเข้าห้องน้ำเพื่อขับถ่ายบ่อยเพียงใด</p>
+      <div class="q-number">คำถามที่ 12</div>
+      <p class="question">คุณเข้าห้องน้ำเพื่อขับถ่ายบ่อยเพียงใด</p>
       <label><input type="radio" name="entry.1346111519" value="น้อยกว่า 3 ครั้งต่อสัปดาห์" required><span class="option">น้อยกว่า 3 ครั้งต่อสัปดาห์</span></label>
       <label><input type="radio" name="entry.1346111519" value="3-4 ครั้งต่อสัปดาห์"><span class="option">3-4 ครั้งต่อสัปดาห์</span></label>
       <label><input type="radio" name="entry.1346111519" value="5-6 ครั้งต่อสัปดาห์"><span class="option">5-6 ครั้งต่อสัปดาห์</span></label>
@@ -204,9 +397,9 @@
       <label><input type="radio" name="entry.1346111519" value="วันละ 1-2 ครั้งอย่างสม่ำเสมอ"><span class="option">วันละ 1-2 ครั้งอย่างสม่ำเสมอ</span></label>
     </div>
 
-    <!-- Question 13 -->
     <div class="question-block">
-      <p class="question">13. คุณมีอาการท้องผูกบ่อยเพียงใด</p>
+      <div class="q-number">คำถามที่ 13</div>
+      <p class="question">คุณมีอาการท้องผูกบ่อยเพียงใด</p>
       <label><input type="radio" name="entry.1277553664" value="มีอาการทุกวันหรือเกือบทุกวัน (6-7 วัน)" required><span class="option">มีอาการทุกวันหรือเกือบทุกวัน (6-7 วัน)</span></label>
       <label><input type="radio" name="entry.1277553664" value="มีอาการบ่อย (4-5 วัน)"><span class="option">มีอาการบ่อย (4-5 วัน)</span></label>
       <label><input type="radio" name="entry.1277553664" value="มีอาการเป็นบางครั้ง (2-3 วัน)"><span class="option">มีอาการเป็นบางครั้ง (2-3 วัน)</span></label>
@@ -214,35 +407,109 @@
       <label><input type="radio" name="entry.1277553664" value="ไม่มีอาการเลย"><span class="option">ไม่มีอาการเลย</span></label>
     </div>
 
-    <button type="submit">ส่งแบบประเมิน</button>
+    <button type="submit" class="submit-btn" id="submitBtn">ส่งแบบประเมิน</button>
   </form>
 </div>
-    <script>
-        const form = document.querySelector('form');
 
-        form.addEventListener('submit', function(e) {
-            // 1. Prevent the default browser redirect
-            e.preventDefault(); 
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+  <button class="back-btn" id="backBtn" disabled>&#8592;</button>
+  <div class="progress-bar-container">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-text" id="progressText">1/13</div>
+</div>
 
-            // 2. Gather the form data
-            const formData = new FormData(form);
+<script>
+  const questions = document.querySelectorAll('.question-block');
+  const radios = document.querySelectorAll('input[type="radio"]');
+  const backBtn = document.getElementById('backBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+  const catSteps = document.querySelectorAll('.cat-step');
+  const form = document.getElementById('assessmentForm');
+  
+  let currentStep = 0;
+  const totalSteps = questions.length;
 
-            // 3. Send the data asynchronously
-            fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            mode: 'no-cors' // Required to bypass CORS restrictions on Google Forms
-            })
-            .then(() => {
-            // 4. Execute success actions
-            alert('ส่งแบบประเมินเรียบร้อยแล้ว'); // Show success message
-            form.reset(); // Clear the form fields
-            })
-            .catch(error => {
-            console.error('Error:', error);
-            alert('เกิดข้อผิดพลาดในการส่งข้อมูล');
-            });
-        });
-    </script>
+  function updateUI() {
+    // Update Question Visibility
+    questions.forEach((q, index) => {
+      q.classList.toggle('active', index === currentStep);
+    });
+
+    // Update Bottom Progress
+    const progressPercent = ((currentStep + 1) / totalSteps) * 100;
+    progressFill.style.width = `${progressPercent}%`;
+    progressText.innerText = `${currentStep + 1}/${totalSteps}`;
+    
+    // Toggle Back Button State
+    backBtn.disabled = currentStep === 0;
+
+    // Toggle Submit Button on Last Step
+    if (currentStep === totalSteps - 1) {
+      submitBtn.classList.add('active');
+    } else {
+      submitBtn.classList.remove('active');
+    }
+
+    // Update Top Category Progress (Logic assumes roughly 2-3 questions per category)
+    const categoryIndex = Math.floor(currentStep / 2.6); // Spreads 13 questions across 5 categories
+    catSteps.forEach((cat, index) => {
+      if (index <= categoryIndex) {
+        cat.classList.add('active');
+      } else {
+        cat.classList.remove('active');
+      }
+    });
+  }
+
+  // Auto-advance on radio selection
+  radios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      setTimeout(() => {
+        if (currentStep < totalSteps - 1) {
+          currentStep++;
+          updateUI();
+        }
+      }, 300); // 300ms delay for smooth transition
+    });
+  });
+
+  // Handle Back Button
+  backBtn.addEventListener('click', () => {
+    if (currentStep > 0) {
+      currentStep--;
+      updateUI();
+    }
+  });
+
+  // Handle Form Submission[cite: 1]
+  form.addEventListener('submit', function(e) {
+    e.preventDefault(); 
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors' 
+    })
+    .then(() => {
+      alert('ส่งแบบประเมินเรียบร้อยแล้ว'); 
+      form.reset(); 
+      currentStep = 0;
+      updateUI();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('เกิดข้อผิดพลาดในการส่งข้อมูล');
+    });
+  });
+
+  // Initialize UI
+  updateUI();
+</script>
+
 </body>
 </html>
